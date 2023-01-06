@@ -1,9 +1,11 @@
 import { useState as react_useState, useEffect as react_useEffect } from 'react'
+import {  } from './VisxExample'
 import {  } from '@mui/material/Box'
 import {  } from '@mui/material/Button'
 import {  } from '@mui/material/TextField'
 import {  } from '@mui/material/Typography'
-import { atom, get, nth, deref, first, shuffle, remove } from 'squint-cljs/core.js'
+import { first, atom, reset_BANG_, shuffle, remove, get, rand_int, nth, deref } from 'squint-cljs/core.js'
+import Visx from './VisxExample';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -34,7 +36,8 @@ var App = function () {
 let vec__1518 = react_useState(first(shuffle(animalsData)));
 let animal19 = nth(vec__1518, 0, null);
 let set_animal20 = nth(vec__1518, 1, null);
-return <Box sx={({ "display": "flex", "flexDirection": "column", "alignItems": "center", "justifyContent": "center" })}><Box sx={({ "display": "flex", "flexDirection": "column", "gap": "1rem", "alignItems": "center", "justifyContent": "center", "width": "100%" })}><Typography variant="h1">Hello, alex</Typography> <Game {...animal19}></Game> <Button variant="contained" color="primary" onClick={function () {
+return <Box sx={({ "display": "flex", "flexDirection": "column", "alignItems": "center", "justifyContent": "center" })}><Box sx={({ "display": "flex", "flexDirection": "column", "gap": "1rem", "alignItems": "center", "justifyContent": "center", "width": "100%" })}><Typography variant="h1">Hello, alex</Typography> <Game {...animal19}></Game> <Visx width={400} height={400}></Visx> <Button variant="contained" color="primary" onClick={function () {
+reset_BANG_(testatom, rand_int(100));
 return set_animal20(first(shuffle(remove(function (p__21) {
 let map__2223 = p__21;
 let sound24 = get(map__2223, "sound");

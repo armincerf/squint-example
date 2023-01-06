@@ -1,5 +1,6 @@
 (ns App
   (:require ["react" :as react]
+            ["./VisxExample$default" :as Visx]
             ["@mui/material/Box$default" :as Box]
             ["@mui/material/Button$default" :as Button]
             ["@mui/material/TextField$default" :as TextField]
@@ -49,9 +50,12 @@
                  :width "100%"}}
            [Typography {:variant "h1"} "Hello, alex"]
            [Game {:& animal}]
+           [Visx {:width 400
+                  :height 400}]
            [Button {:variant "contained"
                     :color "primary"
                     :onClick #(do
+                                (reset! testatom (rand-int 100))
                                 (set-animal (first (shuffle (remove
                                                              (fn [{:keys [sound]}]
                                                                (= sound (:sound animal)))
