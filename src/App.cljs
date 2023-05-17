@@ -1,13 +1,14 @@
 (ns App
   (:require ["react" :as react]
             ["./VisxExample$default" :as Visx]
+            ["@tanstack/react-query" :refer [useQuery]]
             ["@mui/material/Box$default" :as Box]
             ["@mui/material/Button$default" :as Button]
             ["@mui/material/TextField$default" :as TextField]
             ["@mui/material/Typography$default" :as Typography]))
 
 (def animalsData [{:sound "Moo Moo"
-                   :animal "Cow"
+                   :animal2 "Cow"
                    :language "English"}
                   {:sound "Miau Miau"
                    :animal "Cat"
@@ -27,7 +28,8 @@
        (set-guess ""))
      [test])
     #jsx [Box
-          [Typography {:variant "h4"} "What animal is this?"]
+          [:div {:class "hello???" :variant "h4"} "What animal is this?"]
+          [:div "hi " @testatom]
           [Typography {:variant "h6"} sound]
           [TextField {:label "Animal"
                       :value guess
@@ -36,7 +38,13 @@
             #jsx [Typography {:variant "h4"} "Correct!"])]))
 
 (defn App []
-  (let [[animal set-animal] (react/useState (first (shuffle animalsData)))]
+  (let [[animal set-animal] (react/useState (first (shuffle animalsData)))
+        {:keys [data isLoading]}
+        (useQuery {:queryKey ["animals"]
+                   :queryFn (fn []
+                              (.then (js/fetch "https://jsonplaceholder.typicode.com/todos/1")
+                                     (fn [response]
+                                       (.json response))))})]
     #jsx [Box {:sx {:display "flex"
                     :flexDirection "column"
                     :alignItems "center"
@@ -48,7 +56,10 @@
                  :alignItems "center"
                  :justifyContent "center"
                  :width "100%"}}
-           [Typography {:variant "h1"} "Hello, alex"]
+           (if isLoading
+             #jsx [Typography {:variant "h1"} "Loading..."]
+             #jsx
+              [Typography {:variant "h1"} (:title data)])
            [Game {:& animal}]
            [Visx {:width 400
                   :height 400}]
